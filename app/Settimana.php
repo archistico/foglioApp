@@ -1,7 +1,7 @@
 <?php
 namespace App;
 
-class Appuntamenti
+class Settimana
 {
     public $orari;
     public $appuntamenti;
@@ -12,7 +12,7 @@ class Appuntamenti
         $this->appuntamenti = array();
     }
 
-    public function AddAppuntamenti(string $giorno, string $ambulatorio, string $inizio, string $fine): self
+    public function AddGiornata(string $giorno, string $ambulatorio, string $inizio, string $fine): self
     {
         // cerca appuntamenti in cui > inizio e < fine
         $iniziato = false;
@@ -33,7 +33,7 @@ class Appuntamenti
             }
 
             if ($iniziato) {
-                $app[] = new Appuntamento($giorno, $o, $ambulatorio);
+                $app[] = new Giornata($giorno, $o, $ambulatorio);
             }
         }
 

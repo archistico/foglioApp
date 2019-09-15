@@ -1,7 +1,7 @@
 <?php
 namespace App;
 
-class Appuntamento
+class Giornata
 {
     public $giorno;
     public $ora;

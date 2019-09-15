@@ -1,7 +1,7 @@
 <?php
 namespace App;
 
-DEFINE(BR, "<br>");
+DEFINE('BR', "<br>");
 
 class Pdf
 {
