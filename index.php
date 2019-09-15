@@ -260,7 +260,55 @@ for($c = 8; $c<=19; $c++ )
     }
 }
 
-//Appuntamenti->AddAppuntamenti("Me", "8:30", "12:30");
+class Appuntamento
+{
+    public $giorno;
+    public $ora;
+    public $ambulatorio;
+
+    public function __construct($giorno, $ora, $ambulatorio)
+    {
+        $this->giorno = $giorno;
+        $this->ora = $ora;
+        $this->ambulatorio = $ambulatorio;
+    }
+
+    public function getGiorno()
+    {
+        return $this->giorno;
+    }
+
+    public function setGiorno($giorno)
+    {
+        $this->giorno = $giorno;
+
+        return $this;
+    }
+
+    public function getOra()
+    {
+        return $this->ora;
+    }
+
+    public function setOra($ora)
+    {
+        $this->ora = $ora;
+
+        return $this;
+    }
+ 
+    public function getAmbulatorio()
+    {
+        return $this->ambulatorio;
+    }
+ 
+    public function setAmbulatorio($ambulatorio)
+    {
+        $this->ambulatorio = $ambulatorio;
+
+        return $this;
+    }
+}
 
 class Appuntamenti
 {
@@ -273,7 +321,7 @@ class Appuntamenti
         $this->appuntamenti = array();
     }
 
-    public function AddAppuntamenti(string $giorno, string $inizio, string $fine): self
+    public function AddAppuntamenti(string $giorno, string $ambulatorio, string $inizio, string $fine): self
     {
         // cerca appuntamenti in cui > inizio e < fine
         $iniziato = false;
@@ -299,7 +347,7 @@ class Appuntamenti
 
             if($iniziato)
             {
-                $app[] = $o;
+                $app[] = new Appuntamento($giorno, $o, $ambulatorio);
             }
         }
 
@@ -311,58 +359,10 @@ class Appuntamenti
 
 $app = new Appuntamenti($orari);
 
-$app->AddAppuntamenti("Ma", "9:00", "13:00")
-    ->AddAppuntamenti("Me", "9:00", "13:00")
-    ->AddAppuntamenti("Gi", "9:00", "13:00");
+$app->AddAppuntamenti("Ma", "St-Vincent", "9:00", "13:00")
+    ->AddAppuntamenti("Me", "Chatillon", "9:00", "13:00")
+    ->AddAppuntamenti("Me", "Pontey", "14:00", "17:00")
+    ->AddAppuntamenti("Gi", "St-Vincent", "9:00", "13:00");
 
 var_dump($app->appuntamenti);
 
-
-
-
-
-
-
-/*
-$pdf->AddPage('L', [$pageWidth,$pageHeight]);
-$pdf->SetMargins($margin, $margin, $margin);
-
-$pdf->SetFont('Arial','B',20);
-$pdf->Text($margin + $width/2 -10, $margin + $header/2,$year);
-
-for($c = 0; $c<12 ; $c++) {
-    $xColumn = $margin + $c*($columnWidth+$gutter);
-    $yColumn = $margin + $header;
-    $pdf->SetFillColor(196);
-    //$pdf->Rect($xColumn,$yColumn,$columnWidth,$columnHeight,'F');
-    $mese = $cal->getMonth($c+1);
-    $meseNome = Giorno::getMonthName($c+1);
-    $pdf->SetFont('Arial','B',11);
-    $pdf->Text($xColumn,$yColumn,($meseNome));
-
-    for($r = 0; $r<count($mese) ; $r++) {
-        $pdf->SetFillColor(180);
-        $yRow = $yColumn + $r * $rowHeight + $rowMargin;
-        
-        if($mese[$r]->isHoliday())
-        {
-            $pdf->SetFillColor(230);
-            $pdf->Rect($xColumn,$yRow+$rowPadding,$columnWidth,$rowHeight-2*$rowPadding,'F');
-        }
-        
-        //$pdf->SetXY($xColumn+$rowMargin,$yRow);
-        $pdf->Line($xColumn, $yRow+$rowHeight, $xColumn+$columnWidth, $yRow+$rowHeight);
-        
-        // Numero del mese
-        $pdf->SetFont('Arial','B',10);
-        $pdf->Text($xColumn,$yRow+$textNumberHeight+$rowPadding,$mese[$r]->getDay());
-        
-        // Giorno della settimana
-        $pdf->SetFont('Arial','',9);
-        $pdf->Text($xColumn+$rowWidthNumber,$yRow+$textNumberHeight+$rowPadding,$mese[$r]->getDayOfWeek());
-    }
-}
-
-$pdf->Output();
-
-*/
