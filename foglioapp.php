@@ -7,18 +7,8 @@ DEFINE('PRE2', "</pre>");
 if (isset($_GET['data'])) {
     $data = DateTime::createFromFormat('Y-m-d', $_GET['data']);
 } else {
-    $data = new DateTime;
+    $data = new DateTime();
 }
-
-$suddivisione_oraria = ["00", "15", "30", "45"];
-$orari = new App\Orari();
-for ($c = 8; $c <= 19; $c++) {
-    foreach ($suddivisione_oraria as $s) {
-        $orari->AddOrario("{$c}:{$s}");
-    }
-}
-
-$app = new App\Settimana($orari);
 
 if (isset($_GET['dott'])) {
     $dott = strtolower($_GET['dott']);
@@ -28,28 +18,50 @@ if (isset($_GET['dott'])) {
 
 switch ($dott) {
     case "rollandin":
+        $suddivisione_oraria = ["00", "15", "30", "45"];
+        $orari = new App\Orari();
+        for ($c = 8; $c <= 19; $c++) {
+            foreach ($suddivisione_oraria as $s) {
+                $orari->AddOrario("{$c}:{$s}");
+            }
+        }
+        $app = new App\Settimana($orari);
         $app
             ->AddGiornata("Lu", "St-Vincent", "17:00", "19:00")
             ->AddGiornata("Ma", "St-Vincent", "9:00", "13:00")
             ->AddGiornata("Me", "Chatillon", "9:00", "13:00")
             ->AddGiornata("Gi", "St-Vincent", "9:00", "13:00")
             ->AddGiornata("Ve", "Pontey", "17:00", "19:00")
-            ;
+        ;
 
         $pdf = new App\Pdf($app->appuntamenti, 1, $data, "Dott.ssa Rollandin Christine - 340.84.45.333");
         break;
-        case "rollandin2":
+    case "rollandin2":
+        $suddivisione_oraria = ["00", "15", "30", "45"];
+        $orari = new App\Orari();
+        for ($c = 8; $c <= 19; $c++) {
+            foreach ($suddivisione_oraria as $s) {
+                $orari->AddOrario("{$c}:{$s}");
+            }
+        }
+        $app = new App\Settimana($orari);
         $app
-            
             ->AddGiornata("Ma", "St-Vincent", "9:00", "13:00")
             ->AddGiornata("Me", "Chatillon", "9:00", "13:00")
             ->AddGiornata("Gi", "St-Vincent", "9:00", "13:00")
-            
-            ;
+        ;
 
         $pdf = new App\Pdf($app->appuntamenti, 2, $data, "Dott.ssa Rollandin Christine - 340.84.45.333");
         break;
     case "cavurina":
+        $suddivisione_oraria = ["00", "15", "30", "40", "50"];
+        $orari = new App\Orari();
+        for ($c = 8; $c <= 19; $c++) {
+            foreach ($suddivisione_oraria as $s) {
+                $orari->AddOrario("{$c}:{$s}");
+            }
+        }
+        $app = new App\Settimana($orari);
         $app->AddGiornata("Lu", "St-Vincent", "15:30", "19:00")
             ->AddGiornata("Ma", "St-Vincent", "15:30", "19:00")
             ->AddGiornata("Me", "St-Vincent", "9:30", "12:30")
@@ -61,3 +73,4 @@ switch ($dott) {
 }
 
 $pdf->ViewPdf();
+//$pdf->Screen();

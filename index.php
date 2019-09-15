@@ -57,19 +57,19 @@
                     $lunedi = clone $oggi;
                     $lunedi->sub(new DateInterval("P" . $differenzagiornilunedi . "D"));
 
-                    for($c = 0; $c<6; $c++) {
+                    for($c = 0; $c<8; $c++) {
                         $listaGiorni[] = clone $lunedi;
                         $lunedi->add(new \DateInterval('P7D'));
                     }                    
                 ?>
 
                 <?php foreach($listaGiorni as $g): ?>
-                    <a href="foglioapp.php?data=<?= $g->format('Y-m-d'); ?>&dott=rollandin">Settimana dal <?= $g->format('Y-m-d'); ?></a><br>
+                    <a href="foglioapp.php?data=<?= $g->format('Y-m-d'); ?>&dott=rollandin">Settimana dal <?= $g->format('d/m/Y'); ?></a><br>
                 <?php endforeach; ?>
                 <br>
                 <h5>Due settimane sullo stesso foglio: </h5>
-                <?php for($c = 0; $c<6; $c+=2) : ?>
-                    <a href="foglioapp.php?data=<?= $listaGiorni[$c]->format('Y-m-d'); ?>&dott=rollandin2">Settimana dal <?= $listaGiorni[$c]->format('Y-m-d'); ?></a><br>
+                <?php for($c = 0; $c<8; $c+=2) : ?>
+                    <a href="foglioapp.php?data=<?= $listaGiorni[$c]->format('Y-m-d'); ?>&dott=rollandin2">Settimana dal <?= $listaGiorni[$c]->format('d/m/Y'); ?></a><br>
                 <?php endfor; ?>
             </div>
         </div>
@@ -78,7 +78,7 @@
         <div class="row">
             <div class="col-md-12"> 
                 <?php foreach($listaGiorni as $g): ?>
-                    <a href="foglioapp.php?data=<?= $g->format('Y-m-d'); ?>&dott=cavurina">Settimana dal <?= $g->format('Y-m-d'); ?></a><br>
+                    <a href="foglioapp.php?data=<?= $g->format('Y-m-d'); ?>&dott=cavurina">Settimana dal <?= $g->format('d/m/Y'); ?></a><br>
                 <?php endforeach; ?>
             </div>
         </div>

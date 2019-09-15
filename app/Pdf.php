@@ -74,7 +74,7 @@ class Pdf
 
         for ($c = 0; $c < $numberDays; $c++) {
             if ($c != 0) {
-                $t->add(new \DateInterval('P1D'));
+                $t->add(new \DateInterval('P7D'));
             }
             $set = new CalcoloSettimana($t);
             $corrispondenza[] = ["Lu", $set->lunedi];
