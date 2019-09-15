@@ -14,10 +14,31 @@ class Pdf
         $this->data = $data;
     }
 
+    public function CalcRowMax()
+    {
+        foreach ($this->app as $k => $v) {
+            $row = 0;
+                $t_amb_prec = "";
+                foreach ($v as $ora) {
+                    $t_ora = $ora->getOra();
+                    $t_amb = $ora->getAmbulatorio();
+                    if ($t_amb_prec != $t_amb) {
+                        $t_amb_prec = $t_amb;
+                        $row++;
+                    }
+                    $row++;
+                }
+            if($max < $row) {
+                $max = $row;
+            }
+        }
+        return $max;
+    }
+
     public function ViewPdf()
     {
         $pdf = new \FPDF();
-        
+
         $pageWidth = 297;
         $pageHeight = 210;
         $margin = 7;
@@ -32,7 +53,7 @@ class Pdf
         $columnWidth = ($width - ($numberColumns - 1) * $gutter) / $numberColumns;
         $columnHeight = $height - $header;
         $rowMargin = 1;
-        $numberRows = 30;
+        $numberRows = $this->CalcRowMax();
         $rowHeight = ($columnHeight - 1 * $rowMargin) / $numberRows;
         $rowPadding = 0.5;
         $rowWidthNumber = 5;
@@ -67,7 +88,7 @@ class Pdf
         $pdf->SetFont('Arial', 'B', $textTitleHeight);
         $text = "Appuntamenti Rollandin";
         $textWidth = strlen($text) * 1;
-        $pdf->Text($margin + $width / 2 - $textWidth, $margin + $header / 2-2, $text);
+        $pdf->Text($margin + $width / 2 - $textWidth, $margin + $header / 2 - 2, $text);
 
         //echo $text . BR;
 
@@ -83,52 +104,68 @@ class Pdf
             $xColumn = $margin + $c * ($columnWidth + $gutter);
             $yColumn = $margin + $header;
             $pdf->SetFillColor(196);
-            $pdf->Rect($xColumn, $yColumn, $columnWidth, $columnHeight, 'F');
+            //$pdf->Rect($xColumn, $yColumn, $columnWidth, $columnHeight, 'F');
 
             $data_stringa = "";
 
             for ($i = 0; $i < count($corrispondenza); $i++) {
                 if ($giorni[$c] == $corrispondenza[$i][0]) {
-                    $data_stringa = $corrispondenza[$i][1]->format('d-m-Y');
+                    $data_stringa = $corrispondenza[$i][1]->format('d/m/Y');
                     $corrispondenza[$i][0] = null;
                     $corrispondenza[$i][1] = null;
                     break;
                 }
             }
 
+            switch ($giorni[$c]) {
+                case "Lu":$t_g = "Lunedì";
+                    break;
+                case "Ma":$t_g = "Martedì";
+                    break;
+                case "Me":$t_g = "Mercoledì";
+                    break;
+                case "Gi":$t_g = "Giovedì";
+                    break;
+                case "Ve":$t_g = "Venerdì";
+                    break;
+                case "Sa":$t_g = "Sabato";
+                    break;
+                case "Do":$t_g = "Domenica";
+                    break;
+            }
+
+            $pdf->SetFillColor(196);
+            $pdf->Rect($xColumn, $yColumn - $rowHeight + $rowMargin, $columnWidth, $rowHeight + $rowMargin, 'F');
             $pdf->SetFont('Arial', 'B', $textTitleColumnHeight);
-            $pdf->Text($xColumn, $yColumn, $giorni[$c] . " - " . $data_stringa);
+            $pdf->Text($xColumn, $yColumn, iconv('UTF-8', 'windows-1252', $t_g) . " (" . $data_stringa. ")");
 
             $row = 1;
             foreach ($this->app as $k => $v) {
-                if($k == $giorni[$c]) {
+                if ($k == $giorni[$c]) {
                     $t_amb_prec = "";
-                    foreach($v as $ora) {
+                    foreach ($v as $ora) {
                         $t_ora = $ora->getOra();
                         $t_amb = $ora->getAmbulatorio();
-                        if($t_amb_prec != $t_amb) {
+                        if ($t_amb_prec != $t_amb) {
                             $t_amb_prec = $t_amb;
                             //echo $t_amb.BR;
                             $pdf->SetFont('Arial', 'B', $textTitleColumnHeight);
-                            $pdf->Text($xColumn, $yColumn + $row * $rowHeight , $t_amb);
-                            $row++;    
+                            $pdf->Text($xColumn, $yColumn + $row * $rowHeight, $t_amb);
+                            $pdf->Line($xColumn, $yColumn + $row * $rowHeight + $rowMargin, $xColumn + $columnWidth, $yColumn + $row * $rowHeight + $rowMargin);
+                            $row++;
                         }
                         //echo $t_ora.BR;
                         $pdf->SetFont('Arial', '', $textRowHeight);
-                        $pdf->Text($xColumn, $yColumn + $row * $rowHeight , $t_ora);
+                        $pdf->Text($xColumn, $yColumn + $row * $rowHeight, $t_ora);
+                        $pdf->Line($xColumn, $yColumn + $row * $rowHeight + $rowMargin, $xColumn + $columnWidth, $yColumn + $row * $rowHeight + $rowMargin);
                         $row++;
                     }
                 }
 
             }
 
-            //echo BR; 
+            //echo BR;
         }
-
-
-
-
-
 
         $pdf->Output();
 
