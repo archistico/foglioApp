@@ -28,8 +28,8 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
   <ul class="navbar-nav mr-auto">
     <li class="nav-item">
-      <a class="nav-link active " href="/dotsap/">
-        Home
+      <a class="nav-link active " href="http://www.rollandin.it/dotsap/">
+        Dot's App
       </a>
     </li>
   </ul>
@@ -41,45 +41,62 @@
     <div class="jumbotron">
         <div class="container">
             <h1 class="display-5">Fogli Appuntamenti</h1>
+            <?php
+$oggi = new DateTime();
+$inizio = DateTime::createFromFormat('Y-m-d', '2017-06-01');
+
+function week_between_two_dates($date1, $date2)
+{
+    return floor($date1->diff($date2)->days / 7);
+}
+
+function day_between_two_dates($date1, $date2)
+{
+    return floor($date1->diff($date2)->days);
+}
+
+$diffW = week_between_two_dates($oggi, $inizio);
+$diffD = day_between_two_dates($oggi, $inizio);
+?>
+            <p>Lavori da <?= $diffW; ?> settimane (<?= $diffD; ?> giorni)</p>
         </div>
     </div>
 
     <div class="container">
         <h2>Dott.ssa Rollandin</h2>
         <div class="row">
-            <div class="col-md-12"> 
+            <div class="col-md-12">
                 <?php
-                    $oggi = new DateTime();
-                    $listaGiorni = array();
+$listaGiorni = array();
 
-                    $giorno_settimana_numero = $oggi->format('N');
-                    $differenzagiornilunedi = $giorno_settimana_numero - 1;
-                    $lunedi = clone $oggi;
-                    $lunedi->sub(new DateInterval("P" . $differenzagiornilunedi . "D"));
+$giorno_settimana_numero = $oggi->format('N');
+$differenzagiornilunedi = $giorno_settimana_numero - 1;
+$lunedi = clone $oggi;
+$lunedi->sub(new DateInterval("P" . $differenzagiornilunedi . "D"));
 
-                    for($c = 0; $c<8; $c++) {
-                        $listaGiorni[] = clone $lunedi;
-                        $lunedi->add(new \DateInterval('P7D'));
-                    }                    
-                ?>
+for ($c = 0; $c < 8; $c++) {
+    $listaGiorni[] = clone $lunedi;
+    $lunedi->add(new \DateInterval('P7D'));
+}
+?>
 
-                <?php foreach($listaGiorni as $g): ?>
-                    <a href="foglioapp.php?data=<?= $g->format('Y-m-d'); ?>&dott=rollandin">Settimana dal <?= $g->format('d/m/Y'); ?></a><br>
-                <?php endforeach; ?>
+                <?php foreach ($listaGiorni as $g): ?>
+                    <a href="foglioapp.php?data=<?=$g->format('Y-m-d');?>&dott=rollandin">Settimana dal <?=$g->format('d/m/Y');?></a><br>
+                <?php endforeach;?>
                 <br>
                 <h5>Due settimane sullo stesso foglio: </h5>
-                <?php for($c = 0; $c<8; $c+=2) : ?>
-                    <a href="foglioapp.php?data=<?= $listaGiorni[$c]->format('Y-m-d'); ?>&dott=rollandin2">Settimana dal <?= $listaGiorni[$c]->format('d/m/Y'); ?></a><br>
-                <?php endfor; ?>
+                <?php for ($c = 0; $c < 8; $c += 2): ?>
+                    <a href="foglioapp.php?data=<?=$listaGiorni[$c]->format('Y-m-d');?>&dott=rollandin2">Settimana dal <?=$listaGiorni[$c]->format('d/m/Y');?></a><br>
+                <?php endfor;?>
             </div>
         </div>
         <hr>
         <h2>Dott.ssa Cavurina</h2>
         <div class="row">
-            <div class="col-md-12"> 
-                <?php foreach($listaGiorni as $g): ?>
-                    <a href="foglioapp.php?data=<?= $g->format('Y-m-d'); ?>&dott=cavurina">Settimana dal <?= $g->format('d/m/Y'); ?></a><br>
-                <?php endforeach; ?>
+            <div class="col-md-12">
+                <?php foreach ($listaGiorni as $g): ?>
+                    <a href="foglioapp.php?data=<?=$g->format('Y-m-d');?>&dott=cavurina">Settimana dal <?=$g->format('d/m/Y');?></a><br>
+                <?php endforeach;?>
             </div>
         </div>
         <hr>
@@ -87,7 +104,7 @@
   </main>
 
   <footer class="container">
-    <p>&copy; Studio Archistico 2017-<?= (new DateTime())->format('Y'); ?></p>
+    <p>&copy; Studio Archistico 2017-<?=(new DateTime())->format('Y');?></p>
   </footer>
 
   <!-- Bootstrap core JavaScript
