@@ -6,16 +6,19 @@ class Pdf
     private $app;
     private $numberDays;
     private $data;
+    private $intestazione;
 
-    public function __construct($app, $numberDays, $data)
+    public function __construct($app, $numberDays, $data, $intestazione)
     {
         $this->app = $app;
         $this->numberDays = $numberDays;
         $this->data = $data;
+        $this->intestazione = $intestazione;
     }
 
     public function CalcRowMax()
     {
+        $max = 0;
         foreach ($this->app as $k => $v) {
             $row = 0;
                 $t_amb_prec = "";
@@ -60,6 +63,7 @@ class Pdf
         $textNumberHeight = 3;
         $textTitleHeight = 14;
         $textTitleColumnHeight = 11;
+        $textTitleColumnHeight_mm = $textTitleColumnHeight * 0.353;
         $textRowHeight = 10;
 
         $text = "Appuntamenti Rollandin";
@@ -86,7 +90,7 @@ class Pdf
         $pdf->SetMargins($margin, $margin, $margin);
 
         $pdf->SetFont('Arial', 'B', $textTitleHeight);
-        $text = "Appuntamenti Rollandin";
+        $text = $this->intestazione;
         $textWidth = strlen($text) * 1;
         $pdf->Text($margin + $width / 2 - $textWidth, $margin + $header / 2 - 2, $text);
 
@@ -134,10 +138,11 @@ class Pdf
                     break;
             }
 
-            $pdf->SetFillColor(196);
-            $pdf->Rect($xColumn, $yColumn - $rowHeight + $rowMargin, $columnWidth, $rowHeight + $rowMargin, 'F');
+            $row = 0;
+            $pdf->SetFillColor(220);
+            $pdf->Rect($xColumn, $yColumn + $row * $rowHeight + $rowMargin, $columnWidth, - $textTitleColumnHeight_mm - $rowMargin , 'F');
             $pdf->SetFont('Arial', 'B', $textTitleColumnHeight);
-            $pdf->Text($xColumn, $yColumn, iconv('UTF-8', 'windows-1252', $t_g) . " (" . $data_stringa. ")");
+            $pdf->Text($xColumn + $rowMargin, $yColumn + $row * $rowHeight, iconv('UTF-8', 'windows-1252', $t_g) . " (" . $data_stringa. ")");
 
             $row = 1;
             foreach ($this->app as $k => $v) {
