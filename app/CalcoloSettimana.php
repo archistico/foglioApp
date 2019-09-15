@@ -20,11 +20,14 @@ class CalcoloSettimana
     public $domenicaOggi;
     public $giorno;
     public $giornoSettimana;
+
     public function __construct($giorno = null)
     {
         date_default_timezone_set("Europe/Rome");
         if (is_null($giorno)) {
             $this->giorno = new \Datetime();
+        } else if ($giorno instanceof \DateTime) {
+            $this->giorno = $giorno;
         } else {
             $giorno_array = explode("-", $giorno);
             if (count($giorno_array) > 2) {

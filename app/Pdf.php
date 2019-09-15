@@ -1,15 +1,17 @@
 <?php
 namespace App;
 
-DEFINE('BR', "<br>");
-
 class Pdf
 {
     private $app;
+    private $numberDays;
+    private $data;
 
-    public function __construct($app)
+    public function __construct($app, $numberDays, $data)
     {
         $this->app = $app;
+        $this->numberDays = $numberDays;
+        $this->data = $data;
     }
 
     public function ViewPdf()
@@ -80,7 +82,7 @@ class Pdf
         $header = 10;
 
         $numberDayInWeek = count($this->app);
-        $numberDays = 2;
+        $numberDays = $this->numberDays;
         $width = $pageWidth - 2 * $margin;
         $height = $pageHeight - 2 * $margin;
         $numberColumns = $numberDayInWeek*$numberDays;
@@ -99,6 +101,9 @@ class Pdf
         $text = "Appuntamenti Rollandin";
         $textWidth = strlen($text) * 1;
         
+        $set = new CalcoloSettimana($this->data);
+        $corrispondenza = [["Lu", $set->lunedi], ["Ma", $set->martedi],  ["Me", $set->mercoledi],  ["Gi", $set->giovedi],  ["Ve", $set->venerdi],  ["Sa", $set->sabato],  ["Do", $set->domenica]];
+
         echo $text.BR;
 
         $giorni = array();
@@ -109,9 +114,15 @@ class Pdf
         }
 
         for ($c = 0; $c < $numberColumns; $c++) {
-            echo $giorni[$c].BR;
-
             
+            $data_stringa = "";
+            foreach($corrispondenza as $corr) {
+                if($giorni[$c] == $corr[0]) {
+                    $data_stringa = $corr[1]->format('d-m-Y');
+                }
+            }           
+            
+            echo $giorni[$c]." - ".$data_stringa.BR;            
         }
     }
 }
