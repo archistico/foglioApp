@@ -28,6 +28,6 @@ $app->AddGiornata("Ma", "St-Vincent", "9:00", "13:00")
 //echo PRE1.var_dump($corrispondenza).PRE2;
 
 $pdf = new App\Pdf($app->appuntamenti, 2, $data);
-$pdf->Screen();
-//$pdf->ViewPdf();
+//$pdf->Screen();
+$pdf->ViewPdf();
 
