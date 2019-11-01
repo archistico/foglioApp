@@ -64,9 +64,9 @@ $diffD = day_between_two_dates($oggi, $inizio);
     </div>
 
     <div class="container">
-        <h2>Dott.ssa Rollandin</h2>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
+            <h2>Dott.ssa Rollandin</h2>
                 <?php
 $listaGiorni = array();
 
@@ -84,21 +84,17 @@ for ($c = 0; $c < 8; $c++) {
                 <?php foreach ($listaGiorni as $g): ?>
                     <a target="_blank" href="foglioapp.php?data=<?=$g->format('Y-m-d');?>&dott=rollandin">Settimana dal <?=$g->format('d/m/Y');?></a><br>
                 <?php endforeach;?>
-            </div>
-        </div>
-        <hr>
-        <h2>Dott.ssa Cavurina</h2>
-        <div class="row">
-            <div class="col-md-12">
+            </div>       
+        
+            <div class="col-md-6">
+            <h2>Dott.ssa Cavurina</h2>
                 <?php foreach ($listaGiorni as $g): ?>
                     <a target="_blank" href="foglioapp.php?data=<?=$g->format('Y-m-d');?>&dott=cavurina">Settimana dal <?=$g->format('d/m/Y');?></a><br>
                 <?php endforeach;?>
             </div>
-        </div>
-        <hr>
     </div> <!-- /container -->
   </main>
-
+  <hr>
   <footer class="container">
     <p>&copy; Studio Archistico 2017-<?=(new DateTime())->format('Y');?></p>
   </footer>
