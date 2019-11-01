@@ -151,7 +151,7 @@ class Pdf
                     foreach ($v as $ora) {
                         $t_ora = $ora->getOra();
                         $t_amb = $ora->getAmbulatorio();
-                        $t_vuoto = $ora->getVuoto()?" -":"";
+                        $t_vuoto = "  ".$ora->getVuoto();
                         if ($t_amb_prec != $t_amb) {
                             $t_amb_prec = $t_amb;
                             //echo $t_amb.BR;

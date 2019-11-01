@@ -33,7 +33,8 @@ class Settimana
             }
 
             if ($iniziato) {
-                $app[] = new Giornata($giorno, $o, $ambulatorio, in_array($o, $vuoti));
+                $v = array_key_exists($o, $vuoti)?$vuoti[$o]:"";
+                $app[] = new Giornata($giorno, $o, $ambulatorio, $v);
             }
         }
 
