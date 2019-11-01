@@ -16,6 +16,7 @@
   <!-- Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
     crossorigin="anonymous">
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
@@ -81,13 +82,8 @@ for ($c = 0; $c < 8; $c++) {
 ?>
 
                 <?php foreach ($listaGiorni as $g): ?>
-                    <a href="foglioapp.php?data=<?=$g->format('Y-m-d');?>&dott=rollandin">Settimana dal <?=$g->format('d/m/Y');?></a><br>
+                    <a target="_blank" href="foglioapp.php?data=<?=$g->format('Y-m-d');?>&dott=rollandin">Settimana dal <?=$g->format('d/m/Y');?></a><br>
                 <?php endforeach;?>
-                <br>
-                <h5>Due settimane sullo stesso foglio: </h5>
-                <?php for ($c = 0; $c < 8; $c += 2): ?>
-                    <a href="foglioapp.php?data=<?=$listaGiorni[$c]->format('Y-m-d');?>&dott=rollandin2">Settimana dal <?=$listaGiorni[$c]->format('d/m/Y');?></a><br>
-                <?php endfor;?>
             </div>
         </div>
         <hr>
@@ -95,7 +91,7 @@ for ($c = 0; $c < 8; $c++) {
         <div class="row">
             <div class="col-md-12">
                 <?php foreach ($listaGiorni as $g): ?>
-                    <a href="foglioapp.php?data=<?=$g->format('Y-m-d');?>&dott=cavurina">Settimana dal <?=$g->format('d/m/Y');?></a><br>
+                    <a target="_blank" href="foglioapp.php?data=<?=$g->format('Y-m-d');?>&dott=cavurina">Settimana dal <?=$g->format('d/m/Y');?></a><br>
                 <?php endforeach;?>
             </div>
         </div>

@@ -17,6 +17,16 @@ class Orari
         return $this;
     }
 
+    public function OrarioByArray(int $inizio, int $fine, array $orario): self
+    {
+        for ($c = $inizio; $c <= $fine; $c++) {
+            foreach ($orario as $s) {
+                $this->orari[] = "{$c}:{$s}";
+            }
+        }
+        return $this;
+    }
+
     public function getOrari(): array
     {
         return $this->orari;
