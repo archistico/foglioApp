@@ -151,6 +151,7 @@ class Pdf
                     foreach ($v as $ora) {
                         $t_ora = $ora->getOra();
                         $t_amb = $ora->getAmbulatorio();
+                        $t_vuoto = $ora->getVuoto()?" -":"";
                         if ($t_amb_prec != $t_amb) {
                             $t_amb_prec = $t_amb;
                             //echo $t_amb.BR;
@@ -161,7 +162,7 @@ class Pdf
                         }
                         //echo $t_ora.BR;
                         $pdf->SetFont('Arial', '', $textRowHeight);
-                        $pdf->Text($xColumn, $yColumn + $row * $rowHeight, $t_ora);
+                        $pdf->Text($xColumn, $yColumn + $row * $rowHeight, $t_ora . $t_vuoto);
                         $pdf->Line($xColumn, $yColumn + $row * $rowHeight + $rowMargin, $xColumn + $columnWidth, $yColumn + $row * $rowHeight + $rowMargin);
                         $row++;
                     }

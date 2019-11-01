@@ -12,7 +12,7 @@ class Settimana
         $this->appuntamenti = array();
     }
 
-    public function AddGiornata(string $giorno, string $ambulatorio, string $inizio, string $fine): self
+    public function AddGiornata(string $giorno, string $ambulatorio, string $inizio, string $fine, array $vuoti): self
     {
         // cerca appuntamenti in cui > inizio e < fine
         $iniziato = false;
@@ -33,7 +33,7 @@ class Settimana
             }
 
             if ($iniziato) {
-                $app[] = new Giornata($giorno, $o, $ambulatorio);
+                $app[] = new Giornata($giorno, $o, $ambulatorio, in_array($o, $vuoti));
             }
         }
 
